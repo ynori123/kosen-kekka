@@ -10,13 +10,13 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    depends_on:
+      - serviceName: db
     ports:
       - 8000:8000
   db:
     image: postgres:latest
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+    env_file:
+      - fileName: ./db/.env

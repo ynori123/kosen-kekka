@@ -4,7 +4,7 @@ import Icon from "public/icon.svg"
 import { parseCookies, setCookie } from 'nookies';
 import { useRouter } from 'next/navigation';
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   useEffect(() => {
     const cookies: { [token: string]: string; } = parseCookies();

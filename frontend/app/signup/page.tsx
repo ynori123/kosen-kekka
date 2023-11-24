@@ -4,7 +4,7 @@ import Icon from "public/icon.svg"
 import { setCookie } from 'nookies';
 import { Alert } from '@/components/Alert';
 
-export default function page() {
+export default function Page() {
   interface FormData {
     email: string;
     password: string;

@@ -16,10 +16,64 @@ app.add_middleware(
     allow_headers=["*"],  # 許可するヘッダーを指定（"*"はすべてのヘッダーを許可）
 )
 
+# testdata
+test_users = [
+    {
+        "id": 1,
+        "name": "test1",
+        "email": "kosen@kosen.com",
+        "token" : "85e1150b-b0a2-40cf-b854-bb7b04016fd9"
+    },
+    {
+        "id": 2,
+        "name": "test2",
+        "email": "kosen1@kosen.com",
+        "token" : "b0c2019d-1111-4c70-b319-8773a26ec55d"
+    }
+]
+misses = [
+    {
+        "id": 1,
+        "miss" : [
+            {"subject": "情報工学実験", "date": "2021-06-01", "time": 1},
+            {"subject": "英語", "date": "2021-06-02", "time": 2},
+            {"subject": "英語", "date": "2021-06-11", "time": 2},
+        ],
+        "user_id": 1
+    },
+    {
+        "id": 2,
+        "miss" : [
+            {"subject": "情報工学実験", "date": "2021-06-01", "time": 2},
+            {"subject": "英語", "date": "2021-06-02", "time": 2},
+            {"subject": "数学α", "date": "2021-06-03", "time": 2},
+        ],
+        "user_id": 2
+    }
+]
+miss_ratio = [
+    {
+        "id": 1,
+        "miss" : [
+            {"subject": "情報工学実験", "missTime": 5, "totalTime": 30},
+            {"subject": "英語", "missTime": 6, "totalTime": 60},
+            {"subject": "数学α", "missTime": 8, "totalTime": 30},
+        ],
+        "user_id": 1
+    },
+    {
+        "id": 2,
+        "miss" : [
+            {"subject": "情報工学実験", "missTime": 10, "totalTime": 30},
+            {"subject": "英語", "missTime": 2, "totalTime": 60},
+            {"subject": "数学α", "missTime": 2, "totalTime": 30},
+        ],
+        "user_id": 2
+    }
+]
 class LoginRequest(BaseModel):
     email: str
     password: str
-
 
 @app.post("/users/auth")
 def get_offers(login: LoginRequest):
@@ -28,10 +82,28 @@ def get_offers(login: LoginRequest):
         "code" : 0,
         "token" : "85e1150b-b0a2-40cf-b854-bb7b04016fd9"
         }
+    if "b" in login.email: 
+        return {
+            "code" : 0,
+            "token" : "b0c2019d-1111-4c70-b319-8773a26ec55d"
+        }
     else:
         return {
         "code" : 1,
         "token" : "none"
+        }
+
+@app.get("/misses")
+def get_misses(token: str):
+    if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
+        return {
+        "code" : 0,
+        "misses" : miss_ratio[0]
+        }
+    else:
+        return{
+            "code" : 1,
+            "misses" : None
         }
 
 # uvicorn.run(app=app, port=8000, reload=True)

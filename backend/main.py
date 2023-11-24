@@ -1,8 +1,7 @@
-from turtle import title
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+# from fastapi.staticfiles import StaticFiles
 
 
 
@@ -35,3 +34,4 @@ def get_offers(login: LoginRequest):
         "token" : "none"
         }
 
+# uvicorn.run(app=app, port=8000, reload=True)

@@ -112,13 +112,12 @@ export default function Page() {
               </div>
               <div className="mt-2">
                 <input
-                  id="password"
-                  name="password"
+                  id="password1"
+                  name="password1"
                   type="password"
                   placeholder=' ●●●●●●●●●'
                   value={formData.password}
                   onChange={handleChangePassword}
-                  autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -130,13 +129,12 @@ export default function Page() {
               </div>
               <div className="mt-2">
                 <input
-                  id="password"
-                  name="password"
+                  id="password2"
+                  name="password2"
                   type="password"
                   placeholder=' ●●●●●●●●●'
                   value={formData.passwordConfirm}
                   onChange={handleChangePasswordConfirm}
-                  autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

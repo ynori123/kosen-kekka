@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const [missItems, setmissItems] = useState<{ subject: string; missTime: number; totalTime: number;}[]>([]);
   const [missRatio, setMissRatio] = useState<string[]>([]);
   const effectRan = useRef(false)
@@ -20,9 +21,9 @@ export default function Home() {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses/?token=${cookies.token}`);
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         if (data?.code === 1) {
-          alert("エラーが発生しました");
+          console.log("エラーが発生しました");
           return;
         }
         const misses: [{ subject: string; missTime: number; totalTime: number }] = await data?.misses?.miss || [];
@@ -33,6 +34,7 @@ export default function Home() {
           missRatioArray.push(`${Math.floor(misses[i].missTime / (misses[i].totalTime / 3) * 100)}%`);
         }
         setMissRatio(missRatioArray);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -41,11 +43,18 @@ export default function Home() {
     fetchData();
   
     return () => {
-      console.log("unmounted");
+      // console.log("unmounted");
       effectRan.current = true;
     };
+    
   }, []);
-  
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
   return (
     <>
       <div className="mx-auto">
@@ -73,4 +82,6 @@ export default function Home() {
       </section>
     </>
   )
+  
 }
+

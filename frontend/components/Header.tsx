@@ -1,11 +1,17 @@
 "use client";
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Icon from "public/icon.svg";
 import { parseCookies } from 'nookies';
 
 export const Header = () => {
   const cookies: { [token: string]: string; } = parseCookies();
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    if (cookies.token) {
+      setIsLogged(true);
+    }
+  }, [cookies.token]);
   return (
     <header className="text-gray-600 body-font">
       <div className='container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center'>
@@ -19,8 +25,8 @@ export const Header = () => {
           <Link href="/subject" className="mr-5 hover:text-gray-900 hover:font-medium">教科別</Link>
           <Link href="/contact" className="mr-5 hover:text-gray-900 hover:font-medium">お問い合わせ</Link>
         </nav>
-        {/* TODO hydration-errorの解消 */}
-        {cookies.token ?  
+
+        {isLogged ?  
         <nav className='md:ml-auto flex flex-wrap items-center text-base justify-center'>
           <Link href="/logout" className="mr-5 hover:text-gray-900 hover:font-medium">ログアウト</Link>
         </nav>

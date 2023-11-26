@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from 'react'
 export default function Page() {
   const [subjects, setSubjects] = useState<string[]>([]);
   const [missedSubjects, setMissedSubjects] = useState<{subject: string, total: number, missed: number}>({subject: "", total: 0, missed: 0});
-  const [canSubmit, setCanSubmit] = useState(false);
   const [date, setDate] = useState('');
   const missTimes = useRef(["1限遅刻", "1限欠席", "1限欠席+1限遅刻", "2限欠席"])
 
@@ -40,30 +39,28 @@ export default function Page() {
     setMemo(e.target.value);
   }
   const handleSubmit = async () => {
-    if (canSubmit === true) {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses?token=${cookies.token}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            subject: missedSubjects.subject,
-            date: date,
-            memo: memo,
-          }),
-        });
-        const data = await res.json();
-        console.log(data);
-        if (data.code === 0) {
-          alert("欠課登録が完了しました．");
-          window.location.href = "/";
-        }else{
-          alert("エラーが発生しました．");
-        }
-      } catch (err) {
-        console.log(err);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses?token=${cookies.token}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subject: missedSubjects.subject,
+          date: date,
+          memo: memo,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.code === 0) {
+        alert("欠課登録が完了しました．");
+        window.location.href = "/";
+      }else{
+        alert("エラーが発生しました．");
       }
+    } catch (err) {
+      console.log(err);
     }
   }
   return (
@@ -73,9 +70,6 @@ export default function Page() {
           <div className="flex flex-col text-center w-full mb-12">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">欠課登録フォーム</h1>
           </div>
-        <div className="lg:w-1/2 md:w-2/3 mx-auto h-1/12">
-          {(!canSubmit) && <p className='text-red-700 font-bold p-2'>必須項目が入力されていません．</p>}
-        </div>
         <div className="lg:w-1/2 md:w-2/3 mx-auto">
           <div className="flex flex-wrap -m-2">
             <div className="p-2 w-full">

@@ -64,13 +64,14 @@ miss_ratio = [
     {
         "id": 2,
         "miss" : [
-            {"subject": "情報工学実験", "missTime": 10, "totalTime": 30},
+            {"subject": "", "missTime": 10, "totalTime": 30},
             {"subject": "英語", "missTime": 2, "totalTime": 60},
             {"subject": "数学α", "missTime": 2, "totalTime": 30},
         ],
         "user_id": 2
     }
 ]
+subjects = ["情報工学実験", "英語", "数学α"]
 class LoginRequest(BaseModel):
     email: str
     password: str
@@ -104,6 +105,19 @@ def get_misses(token: str):
         return{
             "code" : 1,
             "misses" : None
+        }
+
+@app.get("/subjects")
+def get_subjects(token: str):
+    if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
+        return {
+        "code" : 0,
+        "subjects" : subjects
+        }
+    else:
+        return{
+            "code" : 1,
+            "subjects" : None
         }
 
 # uvicorn.run(app=app, port=8000, reload=True)

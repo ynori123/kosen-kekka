@@ -4,32 +4,43 @@ import React, { useEffect, useRef, useState } from 'react'
 
 export default function Page() {
   const [subjects, setSubjects] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   const [missedSubjects, setMissedSubjects] = useState<{subject: string, total: number, missed: number}>({subject: "", total: 0, missed: 0});
   const [date, setDate] = useState('');
   const missTimes = useRef(["1限遅刻", "1限欠席", "1限欠席+1限遅刻", "2限欠席"])
+  const effectRan = useRef(false)
+
 
   const [memo, setMemo] = useState('');
   const cookies: { [token: string]: string; } = parseCookies();
   useEffect(() => {
     const today = new Date();
     setDate(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`);
-    const fetchSubjects = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/subjects?token=${cookies.token}`);
-        const data = await res.json();
-        console.log(data);
-        if (data.code === 0) {
-          setSubjects(data.subjects);
-        }else{
-          alert("エラーが発生しました．");
-          window.location.href = "/";
+    if (effectRan.current === false) {
+      const fetchSubjects = async () => {
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/subjects?token=${cookies.token}`);
+          const data = await res.json();
+          console.log(data);
+          if (data.code === 0) {
+            setSubjects(data.subjects);
+          }else{
+            alert("エラーが発生しました．");
+            window.location.href = "/";
+          }
+        } catch (err) {
+          console.log(err);
         }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchSubjects();
+      };
+  
+      fetchSubjects();
+      setLoading(false);
+    }
+    return () => {
+      // console.log("unmounted");
+      effectRan.current = true;
+    }
+    
   }, []);
 
   const handleDateChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +73,14 @@ export default function Page() {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   }
   return (
     <>

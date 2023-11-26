@@ -41,22 +41,23 @@ export const Header = () => {
           <Link href="/login" className="mr-5 hover:text-gray-900 hover:font-medium">ログイン</Link>
         </nav>}
         
-        <Link href="https://syllabus.kosen-k.go.jp/Pages/PublicDepartments?school_id=28&lang=ja">
-          <button className="inline-flex items-center bg-gray-300 border-0 py-1 px-3 focus:outline-none hover:bg-gray-400 hover:font-semibold rounded text-base mt-4 md:mt-0">
-            シラバス
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-4 h-4 ml-1"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </button>
-        </Link>
+        <button 
+        className="inline-flex items-center bg-gray-300 border-0 py-1 px-3 focus:outline-none hover:bg-gray-400 hover:font-semibold rounded text-base mt-4 md:mt-0"
+        onClick={() => window.open("https://syllabus.kosen-k.go.jp/Pages/PublicDepartments?school_id=28&lang=ja", '_blank')}
+        >
+          シラバス
+          <svg
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            className="w-4 h-4 ml-1"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </button>
       </div>
     </header>
   )

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Icon from "public/icon.svg"
 import { setCookie } from 'nookies';
 import { Alert } from '@/components/Alert';
+import Link from 'next/link';
 
 export default function Page() {
   interface FormData {
@@ -153,9 +154,9 @@ export default function Page() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             あかうんとをもっているだと？？！{' '}
-            <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               ろぐいん する
-            </a>
+            </Link>
           </p>
         </div>
       </div>

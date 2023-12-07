@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { parseCookies } from "nookies";
 import { useEffect, useRef, useState } from "react";
+import { Loading } from "@/components/Loading";
 
 export default function Home() {
   const router = useRouter();
@@ -50,9 +51,7 @@ export default function Home() {
   }, []);
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-      </div>
+      <Loading />
     );
   }
   return (

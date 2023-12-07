@@ -1,11 +1,23 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from os.path import join, dirname
+import os
 # from fastapi.staticfiles import StaticFiles
 
+load_dotenv(verbose=True)
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 app = FastAPI()
+
+
+if os.environ["DEBUG"] == "False":
+    app.openapi_url = None
+    app.docs_url = None
+    app.redoc_url = None
 
 # CORSミドルウェアを有効にする
 app.add_middleware(

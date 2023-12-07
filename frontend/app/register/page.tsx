@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import { parseCookies } from 'nookies';
 import React, { useEffect, useRef, useState } from 'react'
 
@@ -7,8 +8,9 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [missedSubjects, setMissedSubjects] = useState<{subject: string, total: number, missed: number}>({subject: "", total: 0, missed: 0});
   const [date, setDate] = useState('');
-  const missTimes = useRef(["1限遅刻", "1限欠席", "1限欠席+1限遅刻", "2限欠席"])
-  const effectRan = useRef(false)
+  const missTimes = useRef(["1限遅刻", "1限欠席", "1限欠席+1限遅刻", "2限欠席"]);
+  const effectRan = useRef(false);
+  const router = useRouter();
 
 
   const [memo, setMemo] = useState('');
@@ -25,6 +27,7 @@ export default function Page() {
           if (data.code === 0) {
             setSubjects(data.subjects);
           }else{
+            // ログイン状態でない
             alert("エラーが発生しました．");
             window.location.href = "/";
           }
@@ -65,8 +68,8 @@ export default function Page() {
       const data = await res.json();
       console.log(data);
       if (data.code === 0) {
-        alert("欠課登録が完了しました．");
-        window.location.href = "/";
+        // 欠課登録成功
+        router.push("/success");
       }else{
         alert("エラーが発生しました．");
       }

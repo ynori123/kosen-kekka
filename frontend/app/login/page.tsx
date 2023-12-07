@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Icon from "public/icon.svg"
 import { parseCookies, setCookie } from 'nookies';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Page() {
   const router = useRouter();
@@ -100,9 +101,9 @@ export default function Page() {
                   ぱすわーど
                 </label>
                 <div className="text-sm">
-                  <a href="/forget" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <Link href="/forget" className="font-semibold text-indigo-600 hover:text-indigo-500">
                     なんだい？ぱすわーどをわすれただって？？？
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="mt-2">

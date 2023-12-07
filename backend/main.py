@@ -107,6 +107,24 @@ def get_misses(token: str):
             "misses" : None
         }
 
+class RegisterRequest(BaseModel):
+    subject: str
+    date: str
+    memo: str
+
+@app.post("/register")
+async def register(register: RegisterRequest, token: str):
+    if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
+        return {
+        "code" : 0,
+        "misses" : miss_ratio[0]
+        }
+    else:
+        return{
+            "code" : 1,
+            "misses" : None
+        }
+
 @app.get("/subjects")
 def get_subjects(token: str):
     if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":

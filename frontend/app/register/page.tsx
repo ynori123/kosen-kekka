@@ -16,9 +16,13 @@ export default function Page() {
   const [memo, setMemo] = useState('');
   const cookies: { [token: string]: string; } = parseCookies();
   useEffect(() => {
-    const today = new Date();
-    setDate(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`);
     if (effectRan.current === false) {
+      const today = new Date();
+      const month = (today.getMonth() + 1).toString().padStart(2, '0'); // 1桁の場合は0埋め
+      const day = today.getDate().toString().padStart(2, '0'); // 1桁の場合は0埋め
+      setDate(`${today.getFullYear()}-${month}-${day}`);
+      console.log(today)
+      console.log("date: ", date);
       const fetchSubjects = async () => {
         try {
           const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/subjects?token=${cookies.token}`);
@@ -44,7 +48,7 @@ export default function Page() {
       effectRan.current = true;
     }
     
-  }, []);
+  }, [date]);
 
   const handleDateChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
@@ -54,7 +58,7 @@ export default function Page() {
   }
   const handleSubmit = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses?token=${cookies.token}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/register?token=${cookies.token}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

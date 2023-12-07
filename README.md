@@ -4,7 +4,10 @@
 - Frontend: TypeScript/Next.js (App Router)
 - Backend: Python/FastAPI
 - DB: PostgreSQL
-- Infra: AWS
+- Infra: 
+  - Frontend: Vercel
+  - Backend: 未定
+  - DB: 未定
 
 
 

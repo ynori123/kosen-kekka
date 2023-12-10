@@ -1,32 +1,21 @@
-import { parseCookies } from 'nookies';
-import React, { useEffect, useState } from 'react'
+"use client";
+import React from 'react'
+import { MissCard } from '@/app/miss/MissCard';
 
-export const MissList = () => {
-  const cookies: { [token: string]: string; } = parseCookies();
-  const [misses, setMisses] = useState<{subject: string, date: string, missed: number}>({subject: "", date: "", missed: 0});
-  useEffect(() => {
-    if (!cookies.token) {
-      window.location.href = "/";
-    }
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses?token=${cookies.token}`);
-        const data = await res.json();
-        // console.log(data);
-        if (data.code === 1) {
-          // 認証エラー
-          console.log("エラーが発生しました: ");
-        }
-      } catch (err) {
-        console.log("エラーが発生しました: ", err);
-      }
-      
-    }
-    fetchData();
-  }, [])
+export const MissList = ({misses}: {misses: {subject: string, date: string, missed: number}[]}) => {
+  
+  if (!misses || misses.length === 0) {
+    return (
+      <div className="flex flex-wrap">
+        <h2 className="text-gray-900 text-lg title-font font-medium">欠課がありません！素晴らしい！！！</h2>
+      </div>
+    )
+  }
   return (
-    <div>
-      
-    </div>
+    <>
+      {misses.map((miss, index) => (
+        <MissCard key={index} miss={miss}/>
+      ))}
+    </>
   )
 }

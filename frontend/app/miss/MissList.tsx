@@ -10,12 +10,13 @@ export const MissList = ({misses}: {misses: {subject: string, date: string, miss
         <h2 className="text-gray-900 text-lg title-font font-medium">欠課がありません！素晴らしい！！！</h2>
       </div>
     )
+  }else {
+    return (
+      <>
+        {misses.map((miss, index) => (
+          <MissCard keyProp={index} miss={miss} key={index}/>
+        ))}
+      </>
+    )
   }
-  return (
-    <>
-      {misses.map((miss, index) => (
-        <MissCard key={index} miss={miss}/>
-      ))}
-    </>
-  )
 }

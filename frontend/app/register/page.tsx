@@ -11,8 +11,6 @@ export default function Page() {
   const missTimes = useRef(["1限遅刻", "1限欠席", "1限欠席+1限遅刻", "2限欠席"]);
   const effectRan = useRef(false);
   const router = useRouter();
-
-
   const [memo, setMemo] = useState('');
   const cookies: { [token: string]: string; } = parseCookies();
   useEffect(() => {
@@ -137,6 +135,5 @@ export default function Page() {
         </div>
       </div>
     </section>
-    
   );
 }

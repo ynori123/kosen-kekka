@@ -18,6 +18,7 @@ users {
 }
 misses {
   uuidv4 id PK
+  bigint user_id FK
   bigint subject_id FK
   datetime date
   double time  "遅刻の場合は0.3とするためdouble"

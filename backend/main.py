@@ -14,7 +14,7 @@ load_dotenv(dotenv_path)
 app = FastAPI()
 
 
-if os.environ["DEBUG"] == "False":
+if os.environ.get("DEBUG", "False") == "False":
     app.openapi_url = None
     app.docs_url = None
     app.redoc_url = None
@@ -125,16 +125,15 @@ class RegisterRequest(BaseModel):
     memo: str
 
 @app.post("/register")
+# 欠課登録
 async def register(register: RegisterRequest, token: str):
     if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
         return {
-        "code" : 0,
-        "misses" : miss_ratio[0]
+        "code" : 0
         }
     else:
         return{
-            "code" : 1,
-            "misses" : None
+            "code" : 1
         }
 
 @app.get("/subjects")

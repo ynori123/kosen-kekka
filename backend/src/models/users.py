@@ -16,4 +16,3 @@ class User(Base):
     tokens = relationship("Token", backref="users")
     misses = relationship("Miss", backref="users")
     classes = relationship("Class", backref="users")
-    

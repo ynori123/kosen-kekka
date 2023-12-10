@@ -5,7 +5,7 @@ import { parseCookies } from 'nookies';
 
 export default function Page() {
   const cookies: { [token: string]: string; } = parseCookies();
-  const [misses, setMisses] = useState<[{id: string, subject: string, date: string, missed: number}]>([{id: "", subject: "", date: "", missed: 0}]);
+  const [misses, setMisses] = useState<[{id: string, subject: string, date: string, time: number}]>([{id: "", subject: "", date: "", time: 0}]);
   const effectRan = useRef(false);
   useEffect(() => {
     if (!cookies.token) {

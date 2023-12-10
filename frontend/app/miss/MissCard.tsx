@@ -3,7 +3,7 @@ import React from 'react'
 
 type MissCardProps = {
   keyProp: number;
-  miss: { id: string; subject: string; date: string; missed: number };
+  miss: { id: string; subject: string; date: string; time: number };
 };
 
 export const MissCard: React.FC<MissCardProps> = ({keyProp, miss}) => {
@@ -15,7 +15,7 @@ export const MissCard: React.FC<MissCardProps> = ({keyProp, miss}) => {
             <h2 className="text-gray-900 text-lg title-font font-medium">{miss.subject}</h2>
           </div>
           <div className="flex-grow">
-            <p className="leading-relaxed text-base">欠課時数: <span className='font-bold'>{miss.missed}</span></p>
+            <p className="leading-relaxed text-base">欠課時数: <span className='font-bold'>{miss.time}</span></p>
             <p className="leading-relaxed text-base">欠課日: <span className='text-bold'>{miss.date}</span></p>
           </div>
         </div>

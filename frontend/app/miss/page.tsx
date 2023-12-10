@@ -27,7 +27,6 @@ export default function Page() {
         } catch (err) {
           console.log("エラーが発生しました: ", err);
         }
-        
       }
       fetchData();
     }

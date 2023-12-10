@@ -1,4 +1,5 @@
 "use client";
+import { Loading } from '@/components/Loading';
 import { destroyCookie } from 'nookies';
 import { useEffect } from 'react';
 
@@ -14,5 +15,5 @@ export default function Page() {
     logout();
   }, []); 
 
-  return <div>ログアウトできたよ．</div>;
+  return <Loading />;
 }

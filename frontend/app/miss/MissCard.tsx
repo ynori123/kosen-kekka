@@ -1,13 +1,13 @@
 import React from 'react'
 
 type MissCardProps = {
-  key: number;
+  keyProp: number;
   miss: { subject: string; date: string; missed: number };
 };
 
-export const MissCard: React.FC<MissCardProps> = ({key, miss}) => {
+export const MissCard: React.FC<MissCardProps> = ({keyProp, miss}) => {
   return (
-    <div key={key} className="flex flex-wrap">
+    <div key={keyProp} className="flex flex-wrap">
       <div className="p-2 m-2 w-full">
         <div className="flex rounded-lg h-full bg-gray-100 p-4">
           <div className="flex items-center mb-3 my-auto w-1/3">

@@ -1,34 +1,40 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MissList } from '@/app/miss/MissList';
 import { parseCookies } from 'nookies';
 
 export default function Page() {
   const cookies: { [token: string]: string; } = parseCookies();
-  const [misses, setMisses] = useState<[{subject: string, date: string, missed: number}]>([{subject: "", date: "", missed: 0}]);
+  const [misses, setMisses] = useState<[{id: string, subject: string, date: string, missed: number}]>([{id: "", subject: "", date: "", missed: 0}]);
+  const effectRan = useRef(false);
   useEffect(() => {
     if (!cookies.token) {
       window.location.href = "/";
     }
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses/all?token=${cookies.token}`);
-        const data = await res.json();
-        console.log(data);
-        if (data.code === 0) {
-          // 認証成功
-          setMisses(data?.misses?.miss);
-        }else{
-          // 認証エラー
-          console.log("エラーが発生しました: ");
+    if (effectRan.current === false) {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/misses/all?token=${cookies.token}`);
+          const data = await res.json();
+          console.log(data);
+          if (data.code === 0) {
+            // 認証成功
+            setMisses(data?.misses);
+          }else{
+            // 認証エラー
+            console.log("エラーが発生しました: ");
+          }
+        } catch (err) {
+          console.log("エラーが発生しました: ", err);
         }
-      } catch (err) {
-        console.log("エラーが発生しました: ", err);
+        
       }
-      
+      fetchData();
     }
-    fetchData();
-  }, [])
+    return () => {
+      effectRan.current = true;
+    }
+  }, []);
   return (
     <section className="text-gray-600 body-font relative">
       <div className="container px-5 py-6 mx-auto">

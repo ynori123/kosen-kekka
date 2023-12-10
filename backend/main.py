@@ -88,7 +88,7 @@ class LoginRequest(BaseModel):
     email: str
     password: str
 
-@app.post("/users/auth")
+@app.post("/login")
 def get_offers(login: LoginRequest):
     if "a" in login.email:
         return {
@@ -104,6 +104,24 @@ def get_offers(login: LoginRequest):
         return {
         "code" : 1,
         "token" : "none"
+        }
+
+@app.get("/auth")
+def authenticate(token: str):
+    if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
+        return {
+        "code" : 0,
+        "user" : test_users[0]
+        }
+    if token == "b0c2019d-1111-4c70-b319-8773a26ec55d":
+        return {
+        "code" : 0,
+        "user" : test_users[1]
+        }
+    else:
+        return {
+        "code" : 1,
+        "user" : None
         }
 
 @app.get("/misses")

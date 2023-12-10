@@ -8,40 +8,44 @@ export default function Page() {
   const params = useParams();
   const cookies = parseCookies();
   const id = params.id;
-  console.log(params)
+  const initMiss = useRef({id: "", subject: "", date: "", time: 0, memo: ""})
   const [miss, setMiss] = useState<{id: string, subject: string, date: string, time: number, memo: string}>({id: "", subject: "", date: "", time: 0, memo: ""});
   const effectRan = useRef(false);
   useEffect(() => {
-    const authenticate = async () => {
-      const isAuthed = await AuthToken(cookies.token);
-      if (isAuthed === false) {
-        // 認証エラー
-        window.location.href = "/";
-      }else{
-        if (effectRan.current === false) {
-          const fetchData = async () => {
-            try {
-              const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/miss/${id}?token=${cookies.token}`);
-              const data = await res.json();
-              console.log(data);
-              if (data.code === 0) {
-                // 認証成功
-                setMiss(data?.miss);
-              }else{
-                // 認証エラー
-                console.log("エラーが発生しました: ");
+    if (effectRan.current === false) {
+      const authenticate = async () => {
+        const isAuthed = await AuthToken(cookies.token);
+        if (isAuthed === false) {
+          // 認証エラー
+          window.location.href = "/";
+        }else{
+          
+            const fetchData = async () => {
+              try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/miss/${id}?token=${cookies.token}`);
+                const data = await res.json();
+                console.log(data);
+                if (data.code === 0) {
+                  // 認証成功
+                  setMiss(data?.miss);
+                  initMiss.current = data?.miss;
+                }else{
+                  // 認証エラー
+                  console.log("エラーが発生しました: ");
+                }
+              } catch (err) {
+                console.log("エラーが発生しました: ", err);
               }
-            } catch (err) {
-              console.log("エラーが発生しました: ", err);
             }
+            fetchData();
           }
-          fetchData();
         }
-        
+      authenticate();
+      }
+      return () => {
+        effectRan.current = true;
       }
     }
-    authenticate();
-  }
   , [id]);
 
   const handleDateChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,12 +62,13 @@ export default function Page() {
   }
   const handleSubmit = async () => {
     try {
+      const {id, subject, ...submitData} = miss;
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/miss/${id}?token=${cookies.token}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(miss),
+        body: JSON.stringify(submitData),
       });
       const data: {code: number, miss: {id: string, subject: string, date: string, missed: number, memo: string}} = await response.json() || {code: 0, miss: {id: "", subject: "", date: "", missed: 0, memo: ""}};
       if (data?.code === 0){
@@ -73,12 +78,15 @@ export default function Page() {
       console.error('Error fetching data:', error);
     }
   }
+  const handleInitialize = () => {
+    setMiss(initMiss.current);
+  }
   const missTimes = useRef(["1限遅刻", "1限欠席", "1限欠席+1限遅刻", "2限欠席"]);
   return (
     <section className="text-gray-600 body-font relative">
       <div className="container px-5 py-6 mx-auto">
         <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">欠課登録フォーム</h1>
+          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">欠課詳細</h1>
         </div>
         <div className="lg:w-1/2 md:w-2/3 mx-auto">
           <div className="flex flex-wrap -m-2">
@@ -119,11 +127,9 @@ export default function Page() {
               <button onClick={handleSubmit} className="flex mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">修正する</button>
             </div>
             <div className="pr-4 w-1/2 mt-5">
-              <button onClick={handleSubmit} className="flex mx-auto text-white bg-slate-500 border-0 py-2 px-8 focus:outline-none hover:bg-slate-600 rounded text-lg">元に戻す</button>
+              <button onClick={handleInitialize} className="flex mx-auto text-white bg-slate-500 border-0 py-2 px-8 focus:outline-none hover:bg-slate-600 rounded text-lg">元に戻す</button>
             </div>
           </div>
-          
-          
         </div>
       </div>
     </section>

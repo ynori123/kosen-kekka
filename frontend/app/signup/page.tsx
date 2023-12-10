@@ -17,6 +17,7 @@ export default function Page() {
     passwordConfirm: ""
   });
   const [isError, setIsError] = useState(false);
+  const [isAccept, setIsAccept] = useState(false);
 
   const handleSubmit = () => {
     // process.env.NEXT_PUBLIC_BACK_URL
@@ -67,6 +68,7 @@ export default function Page() {
     }));
     setIsError(false);
   };
+
   const handleChangePasswordConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -74,6 +76,10 @@ export default function Page() {
     }));
     setIsError(false);
   };
+
+  const handleChangeIsAccept = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAccept(!isAccept);
+  }
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -83,10 +89,12 @@ export default function Page() {
             あかうんと登録してくれ！！！
           </h2>
         </div>
-        {isError ? <Alert text={errorMessage} /> : <></>}
+        
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="space-y-6">
             <div>
+              {isError ? <Alert text="メールアドレスまたはパスワードが違います" /> : <></>}
+              {isAccept ? <></> : <Alert text="プライバシー・ポリシーと利用規約に同意してください" />}
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 めあど
               </label>
@@ -139,6 +147,24 @@ export default function Page() {
                   required
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+              </div>
+              <div className='flex my-auto mt-4'>
+                <input
+                  id="accept"
+                  name="accept"
+                  type="checkbox"
+                  checked={isAccept}
+                  onChange={handleChangeIsAccept}
+                  required
+                />
+                <label htmlFor="accept" className="ml-2 block text-sm font-medium leading-6 text-gray-900">
+                  <Link href="/policy" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    プライバシーポリシー
+                  </Link>と
+                  <Link href="/terms" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    利用規約
+                  </Link>に同意します。
+                </label>
               </div>
             </div>
 

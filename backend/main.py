@@ -24,7 +24,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # 許可するオリジンを指定
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"], 
+    allow_methods=["GET", "POST", "PUT", "DELETE", "CREATE", "OPTIONS"], 
     allow_headers=["*"],  # 許可するヘッダーを指定（"*"はすべてのヘッダーを許可）
 )
 

@@ -21,7 +21,7 @@ export default function Page() {
         if (effectRan.current === false) {
           const fetchData = async () => {
             try {
-              const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/miss/${id}?token=${cookies.token}&id=${id}`);
+              const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/miss/${id}?token=${cookies.token}`);
               const data = await res.json();
               console.log(data);
               if (data.code === 0) {

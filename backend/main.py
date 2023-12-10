@@ -136,6 +136,19 @@ async def register(register: RegisterRequest, token: str):
             "code" : 1
         }
 
+@app.get("/misses/all")
+def get_misses_all(token: str):
+    if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
+        return {
+        "code" : 0,
+        "misses" : misses[0]["miss"]
+        }
+    else:
+        return{
+            "code" : 1,
+            "misses" : None
+        }
+
 @app.get("/subjects")
 def get_subjects(token: str):
     if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":

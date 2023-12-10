@@ -47,18 +47,18 @@ misses = [
     {
         "id": 1,
         "miss" : [
-            {"subject": "情報工学実験", "date": "2021-06-01", "time": 1, "memo": "バス遅延"},
-            {"subject": "英語", "date": "2021-06-02", "time": 2, "memo": "寝坊"},
-            {"subject": "数学α", "date": "2021-06-03", "time": 3, "memo": ""}
+            {"id": "06c0b353-4782-4c4a-852a-92cd9b56ae2c", "subject": "情報工学実験", "date": "2021-06-01", "time": 1, "memo": "バス遅延"},
+            {"id": "94931ff6-a794-47e4-b08b-cd9756ac25b4","subject": "英語", "date": "2021-06-02", "time": 2, "memo": "寝坊"},
+            {"id": "990ed763-041a-4fa5-bd89-8217d8d6e072","subject": "数学α", "date": "2021-06-03", "time": 3, "memo": ""}
         ],
         "user_id": 1
     },
     {
         "id": 2,
         "miss" : [
-            {"subject": "情報工学実験", "date": "2021-06-01", "time": 2, "memo": "バス遅延"},
-            {"subject": "英語", "date": "2021-06-02", "time": 2, "memo": "寝坊"},
-            {"subject": "数学α", "date": "2021-06-03", "time": 2, "memo": ""},
+            {"id": "afb326e1-4679-4d73-9c04-8811823368bd","subject": "情報工学実験", "date": "2021-06-01", "time": 2, "memo": "バス遅延"},
+            {"id": "bc322fd0-b2f2-4c63-9369-c2e0f9144bb5","subject": "英語", "date": "2021-06-02", "time": 2, "memo": "寝坊"},
+            {"id": "aadc10fd-554f-46bc-891b-73f85c8c90b2","subject": "数学α", "date": "2021-06-03", "time": 2, "memo": ""},
         ],
         "user_id": 2
     }
@@ -139,9 +139,9 @@ async def register(register: RegisterRequest, token: str):
 @app.get("/misses/all")
 def get_misses_all(token: str):
     if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
-        data = {}
+        data = []
         for m in misses[0]["miss"]:
-            data.update({"subject": m["subject"], "time": m["time"], "date":m["date"], "memo":m["memo"]})
+            data.append({"subject": m["subject"], "time": m["time"], "date":m["date"], "memo":m["memo"]})
         return {
         "code" : 0,
         "misses" : data

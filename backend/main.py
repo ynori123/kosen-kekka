@@ -205,7 +205,7 @@ def get_misses_all(token: str):
     if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
         data = []
         for m in misses[0]["miss"]:
-            data.append({"id":m["id"],"subject": m["subject"], "time": m["time"], "date":m["date"], "memo":m["memo"]})
+            data.append({"id":m["id"],"subject": m["subject"], "time": m["time"], "date":m["date"]})
         return {
         "code" : 0,
         "misses" : data

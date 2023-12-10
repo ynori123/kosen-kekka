@@ -1,4 +1,4 @@
-const AuthToken = async (token: string) => {
+export const AuthToken = async (token: string) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_URL}/auth?token=${token}`);
     const data = await res.json();

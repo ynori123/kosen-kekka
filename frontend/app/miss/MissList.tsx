@@ -2,8 +2,8 @@
 import React from 'react'
 import { MissCard } from '@/app/miss/MissCard';
 
-export const MissList = ({misses}: {misses: {subject: string, date: string, missed: number}[]}) => {
-  
+export const MissList = ({misses}: {misses: {id: string, subject: string, date: string, missed: number}[]}) => {
+
   if (!misses || misses.length === 0) {
     return (
       <div className="flex flex-wrap">

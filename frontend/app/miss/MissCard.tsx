@@ -1,13 +1,14 @@
+import Link from 'next/link';
 import React from 'react'
 
 type MissCardProps = {
   keyProp: number;
-  miss: { subject: string; date: string; missed: number };
+  miss: { id: string; subject: string; date: string; missed: number };
 };
 
 export const MissCard: React.FC<MissCardProps> = ({keyProp, miss}) => {
   return (
-    <div key={keyProp} className="flex flex-wrap">
+    <Link href={`/miss/${miss.id}`} key={keyProp} className="flex flex-wrap">
       <div className="p-2 m-2 w-full">
         <div className="flex rounded-lg h-full bg-gray-100 p-4">
           <div className="flex items-center mb-3 my-auto w-1/3">
@@ -19,6 +20,6 @@ export const MissCard: React.FC<MissCardProps> = ({keyProp, miss}) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

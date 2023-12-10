@@ -10,7 +10,7 @@ export const MissCard: React.FC<MissCardProps> = ({keyProp, miss}) => {
   return (
     <Link href={`/miss/${miss.id}`} key={keyProp} className="flex flex-wrap">
       <div className="p-2 m-2 w-full">
-        <div className="flex rounded-lg h-full bg-gray-100 p-4">
+        <div className="flex rounded-lg h-full bg-gray-100 p-4 hover:bg-gray-300">
           <div className="flex items-center mb-3 my-auto w-1/3">
             <h2 className="text-gray-900 text-lg title-font font-medium">{miss.subject}</h2>
           </div>

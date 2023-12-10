@@ -47,18 +47,18 @@ misses = [
     {
         "id": 1,
         "miss" : [
-            {"subject": "情報工学実験", "date": "2021-06-01", "time": 1},
-            {"subject": "英語", "date": "2021-06-02", "time": 2},
-            {"subject": "英語", "date": "2021-06-11", "time": 2},
+            {"subject": "情報工学実験", "date": "2021-06-01", "time": 1, "memo": "バス遅延"},
+            {"subject": "英語", "date": "2021-06-02", "time": 2, "memo": "寝坊"},
+            {"subject": "数学α", "date": "2021-06-03", "time": 3, "memo": ""}
         ],
         "user_id": 1
     },
     {
         "id": 2,
         "miss" : [
-            {"subject": "情報工学実験", "date": "2021-06-01", "time": 2},
-            {"subject": "英語", "date": "2021-06-02", "time": 2},
-            {"subject": "数学α", "date": "2021-06-03", "time": 2},
+            {"subject": "情報工学実験", "date": "2021-06-01", "time": 2, "memo": "バス遅延"},
+            {"subject": "英語", "date": "2021-06-02", "time": 2, "memo": "寝坊"},
+            {"subject": "数学α", "date": "2021-06-03", "time": 2, "memo": ""},
         ],
         "user_id": 2
     }
@@ -139,9 +139,12 @@ async def register(register: RegisterRequest, token: str):
 @app.get("/misses/all")
 def get_misses_all(token: str):
     if token == "85e1150b-b0a2-40cf-b854-bb7b04016fd9":
+        data = {}
+        for m in misses[0]["miss"]:
+            data.update({"subject": m["subject"], "time": m["time"], "date":m["date"], "memo":m["memo"]})
         return {
         "code" : 0,
-        "misses" : misses[0]["miss"]
+        "misses" : data
         }
     else:
         return{

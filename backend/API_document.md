@@ -15,6 +15,8 @@ users {
   varchar name 
   varchar email
   varchar password
+  bool is_available
+  datetime created_at
 }
 misses {
   uuidv4 id PK
@@ -23,22 +25,24 @@ misses {
   datetime date
   double time  "遅刻の場合は0.3とするためdouble"
   text memo
+  datetime created_at
 }
 tokens {
   bigint id PK
   uuidv4 token
   bigint user_id FK
   datetime expires_at  "有効期限"
+  datetime created_at
 }
-
 subjects {
   bigint id PK
   bigint class_id FK
+  datetime created_at
 }
-
 classes {
   bigint id PK
   varchar name
+  datetime created_at
 }
 
 ```

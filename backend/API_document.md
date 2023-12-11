@@ -1,7 +1,51 @@
 # API Document
 
 ## ER Diagram
+```mermaid
+erDiagram
+users ||--o{ misses : has
+users ||--|{ tokens : has
+users ||--|| classes : ""
+misses ||--|| subjects : ""
+classes |o--|{ subjects : ""
 
+users {
+  bigint id PK
+  bigint class_id
+  varchar name 
+  varchar email
+  varchar password
+  bool is_available
+  datetime created_at
+}
+misses {
+  uuidv4 id PK
+  bigint user_id FK
+  bigint subject_id FK
+  datetime date
+  double time  "遅刻の場合は0.3とするためdouble"
+  text memo
+  datetime created_at
+}
+tokens {
+  bigint id PK
+  uuidv4 token
+  bigint user_id FK
+  datetime expires_at  "有効期限"
+  datetime created_at
+}
+subjects {
+  bigint id PK
+  bigint class_id FK
+  datetime created_at
+}
+classes {
+  bigint id PK
+  varchar name
+  datetime created_at
+}
+
+```
 ## Endpoints (Request and Response sample)
 - POST /login
   - req

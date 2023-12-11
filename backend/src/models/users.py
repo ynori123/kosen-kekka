@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, DateTime, Integer, String, ForeignKey
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from src.database import Base
 
@@ -12,6 +13,7 @@ class User(Base):
     email = Column(String(128), unique=True, required=True, index=True)
     hashed_password = Column(String(256), required=True)
     is_available = Column(Integer, default=1)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     tokens = relationship("Token", backref="users")
     misses = relationship("Miss", backref="users")

@@ -15,5 +15,5 @@ class Miss(Base):
     time = Column(Double, required=True)
     memo = Column(Text)
     
-    subject_id = relationship("Subject", backref="misses")
-    user_id = relationship("User", backref="misses")    
+    subject = relationship("Subject", backref="misses")
+    user = relationship("User", backref="misses")    

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Double, Integer, String, ForeignKey, UUID, DateTime, Text
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from src.database import Base
 import uuid
@@ -14,6 +15,7 @@ class Miss(Base):
     datetime = Column(DateTime, required=True, index=True)
     time = Column(Double, required=True)
     memo = Column(Text)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     subject = relationship("Subject", backref="misses")
     user = relationship("User", backref="misses")    
